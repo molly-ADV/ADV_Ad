@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ADVANCED Ad Loop</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    #adVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* or "cover" if you want it to fill */
+      display: block;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <video id="adVideo" autoplay muted playsinline>
+    <!-- TODO: change this to your actual video path/URL -->
+    <source src="ADVANCED-AD.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <script>
+    const video = document.getElementById("adVideo");
+
+    // 30 minutes in milliseconds
+    const HIDE_TIME = 30 * 60 * 1000;
+
+    function scheduleNextPlay() {
+      // Hide the video
+      video.classList.add("hidden");
+
+      // Reset video
+      video.pause();
+      video.currentTime = 0;
+
+      // After 30 minutes, show and play again
+      setTimeout(() => {
+        video.classList.remove("hidden");
+        // Try to play again
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.warn("Autoplay was blocked:", err);
+          });
+        }
+      }, HIDE_TIME);
+    }
+
+    // When the video finishes, start the 30-minute timer
+    video.addEventListener("ended", scheduleNextPlay);
+
+    // Safety: if it fails to autoplay at start, click in OBS browser source once
+  </script>
+</body>
+</html>
