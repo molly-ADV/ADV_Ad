@@ -25,8 +25,8 @@
 </head>
 <body>
   <video id="adVideo" autoplay muted playsinline>
-    <!-- TODO: change this to your actual video path/URL -->
-    <source src="ADVANCED-AD.mp4" type="video/mp4" />
+    <!-- 🔁 Replace this URL with your hosted WebM link -->
+    <source src="https://your-domain.com/path-to-file/ad.webm" type="video/webm" />
     Your browser does not support the video tag.
   </video>
 
@@ -47,7 +47,6 @@
       // After 30 minutes, show and play again
       setTimeout(() => {
         video.classList.remove("hidden");
-        // Try to play again
         const playPromise = video.play();
         if (playPromise !== undefined) {
           playPromise.catch(err => {
@@ -59,8 +58,6 @@
 
     // When the video finishes, start the 30-minute timer
     video.addEventListener("ended", scheduleNextPlay);
-
-    // Safety: if it fails to autoplay at start, click in OBS browser source once
   </script>
 </body>
 </html>
